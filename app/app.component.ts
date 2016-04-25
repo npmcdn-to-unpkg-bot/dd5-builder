@@ -52,21 +52,12 @@ export class AppComponent {
 	}
 
 	cost(from, to) {
+		// 8 = 0; 9 = 1; 10 = 2; 11 = 3; 12 = 4; 13 = 5; 14 = 7; 15 = 9
 		if (this.between(from, 8, 13) && this.between(to, 8, 13)) {
 			return 1;
 		} else if (this.between(from, 13, 15) && this.between(to, 13, 15)) {
 			return 2;
 		}
-		/*
-			8 = 0
-			9 = 1
-			10 = 2
-			11 = 3
-			12 = 4
-			13 = 5
-			14 = 7
-			15 = 9
-		*/
 	}
 
 	add(carac) {
