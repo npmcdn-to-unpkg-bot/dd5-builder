@@ -22,7 +22,19 @@ export class AppComponent {
 			this.resetOthersBonus();
 			let racialId = event.target.value;
 			let bonuses = racial[racialId - 1].bonus;
-			let race = races[racialId - 1];
+
+			let race = null;
+			for (let i = 0; i < races.length; i++) {
+				if (races[i].subraces) {
+					for (let j = 0; j < races[i].subraces.length; j++) {
+						if (races[i].subraces[j].racial == racialId) {
+							race = races[i].subraces[j];
+						}
+					}
+				} else  if (races[i].racial == racialId) {
+					race = races[i];
+				}
+			}
 
 			_gaq.push(['_trackEvent', 'race', race.label])
 
