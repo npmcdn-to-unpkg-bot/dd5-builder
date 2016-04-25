@@ -15,48 +15,60 @@ export class AppComponent {
 	othersBonus = 0;
 	raceWithBonus = false;
 	exceptBonus = 0;
+	tooltips = {
+		github: 'Check me on Github !',
+		str: 'Puissance physique, aptitude athlétique naturelle',
+		dex: 'Agilité, réflexes, équilibre',
+		con: 'Santé, endurance, force vitale',
+		int: 'Acuité mentale, raisonnement, mémoire',
+		sag: 'Perception, intuition, perspicacité',
+		cha: 'Force de personnalité, éloquence, leadership',
+	}
 
 	ngAfterViewInit() {
 		$('select').material_select();
-		$('#select-race').change((event) => {
-			this.resetOthersBonus();
-			let racialId = event.target.value;
-			let bonuses = racial[racialId - 1].bonus;
+		$('.tooltipped').tooltip({delay: 50});
+		$('#select-race').change((event) => { this.onSelectRace(event) });
+	}
 
-			let race = null;
-			for (let i = 0; i < races.length; i++) {
-				if (races[i].subraces) {
-					for (let j = 0; j < races[i].subraces.length; j++) {
-						if (races[i].subraces[j].racial == racialId) {
-							race = races[i].subraces[j];
-						}
+	onSelectRace(event) {
+		this.resetOthersBonus();
+		let racialId = event.target.value;
+		let bonuses = racial[racialId - 1].bonus;
+
+		let race = null;
+		for (let i = 0; i < races.length; i++) {
+			if (races[i].subraces) {
+				for (let j = 0; j < races[i].subraces.length; j++) {
+					if (races[i].subraces[j].racial == racialId) {
+						race = races[i].subraces[j];
 					}
-				} else  if (races[i].racial == racialId) {
-					race = races[i];
 				}
+			} else  if (races[i].racial == racialId) {
+				race = races[i];
 			}
+		}
 
-			_gaq.push(['_trackEvent', 'race', race.label])
+		_gaq.push(['_trackEvent', 'race', race.label])
 
-			for (let i = 0; i < 6; i++) {
-				table[i].racial = 0;
+		for (let i = 0; i < 6; i++) {
+			table[i].racial = 0;
+		}
+
+		for (let i = 0; i < bonuses.length; i++) {
+			let bonus = bonuses[i];
+			if (bonus.others) {
+				this.raceWithBonus = true;
+				this.othersBonus = bonus.others;
+				this.exceptBonus = bonus.except;
+			} else {
+				table[bonus.id - 1].racial = bonus.bonus;
 			}
+		}
 
-			for (let i = 0; i < bonuses.length; i++) {
-				let bonus = bonuses[i];
-				if (bonus.others) {
-					this.raceWithBonus = true;
-					this.othersBonus = bonus.others;
-					this.exceptBonus = bonus.except;
-				} else {
-					table[bonus.id - 1].racial = bonus.bonus;
-				}
-			}
-
-			for (let i = 0; i < 6; i++) {
-				this.valueChanged(this.table[i]);
-			}
-		});
+		for (let i = 0; i < 6; i++) {
+			this.valueChanged(this.table[i]);
+		}
 	}
 
 	between(value, a, b) {

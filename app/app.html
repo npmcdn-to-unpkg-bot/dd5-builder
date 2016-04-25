@@ -1,4 +1,8 @@
 <div class="container">
+  <a class="link-github tooltipped" href="https://github.com/RaphaelYan/dd5-builder" data-position="right" data-delay="50" [attr.data-tooltip]="tooltips.github">
+    <img src="./app/Octocat.png">
+  </a>
+
   <div class="row">
     <h3 class="center-align underlined-title">D&D 5 - Carac builder</h3>
   </div>
@@ -35,6 +39,7 @@
         <tr *ngFor="#line of table; #i = index" class="{{ i % 2 === 1 ? 'blue lighten-4' : '' }}">
           <td [class.text-bold]="line.score === 15">
             {{ line.label }}
+            <i class="material-icons tooltipped" data-position="right" data-delay="50" [attr.data-tooltip]="tooltips[line.tooltip]">help</i>
             <div class="switch" *ngIf="raceWithBonus && (exceptBonus - 1) !== i">
               <label class="{{ line.bonus ? 'black-text text-bold' : ''}}">
                 <input class="other-bonus" type="checkbox" [disabled]="(line.bonus === 0) && (othersBonus <= 0)" (change)="chooseBonus(line)">
