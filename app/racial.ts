@@ -154,5 +154,12 @@ export var racial = [
         bonus: 1
       }
     ]
+  }, {
+    id: 14,
+    bonus: [
+      {
+        others: 2
+      }
+    ]
   }
 ];

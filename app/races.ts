@@ -52,8 +52,17 @@ export var races = [
     ]
   }, {
     label: 'Humain',
-    bonus: '+1 all',
-    racial: 10
+    subraces: [
+      {
+        label: 'Humain',
+        bonus: '+1 all',
+        racial: 10
+      }, {
+        label: 'Humain (variante)',
+        bonus: '+1 à deux carac, 1 compétence maitrisé, 1 don',
+        racial: 14
+      }
+    ]
   }, {
     label: 'Nain',
     subraces: [
